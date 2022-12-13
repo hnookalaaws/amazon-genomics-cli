@@ -4,6 +4,7 @@ import { CromwellBatchPolicy } from "./policies/cromwell-batch-policy";
 import { Arn, Aws, Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Role, ServicePrincipal, PolicyDocument, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
+import { KMS_DEFAULT_KEY_POLICIES } from "aws-cdk-lib/cx-api";
 
 interface CromwellEngineRoleProps {
   readOnlyBucketArns: string[];
@@ -41,6 +42,16 @@ export class CromwellEngineRole extends Role {
             }),
           ],
         }),
+        CromwellKMSDecryptPolicy: new PolicyDocument({
+          assignSids: true,
+          statements:[
+            new PolicyStatement({
+              effect: Effect.ALLOW,
+              actions:["kms:Decrypt"],
+              resources: [] //should add kms decrypt policy here if available
+            })
+          ]
+        })
       },
       ...props.policies,
     });
