@@ -30,6 +30,7 @@ workflows:
 data:
   - location: s3://spacenet-dataset
     readOnly: true
+    kMSDecryptPolicy: asdfaf
 contexts:
   myContext:
     engines:

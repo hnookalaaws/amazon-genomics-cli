@@ -41,6 +41,8 @@ export class ContextAppParameters {
    */
   public readonly readWriteBucketArns?: string[];
 
+  public readonly kmsDecryptPolicy: string;
+
   /**
    * Name of the engine to run.
    */
@@ -118,6 +120,7 @@ export class ContextAppParameters {
     this.artifactBucketName = getEnvString(node, "ARTIFACT_BUCKET");
     this.readBucketArns = getEnvStringListOrDefault(node, "READ_BUCKET_ARNS");
     this.readWriteBucketArns = getEnvStringListOrDefault(node, "READ_WRITE_BUCKET_ARNS");
+    this.kmsDecryptPolicy = getEnvString(node, "KMS_DECRYPT_POLICY")
 
     this.engineName = getEnvString(node, "ENGINE_NAME");
     this.filesystemType = getEnvStringOrDefault(node, "FILESYSTEM_TYPE", this.getDefaultFilesystem());

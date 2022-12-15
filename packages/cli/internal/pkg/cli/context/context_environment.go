@@ -32,6 +32,7 @@ type contextEnvironment struct {
 	ArtifactBucketName  string
 	ReadBucketArns      string
 	ReadWriteBucketArns string
+	KmsDecryptPolicy    string
 	InstanceTypes       string
 	ResourceType        string
 	MaxVCpus            int
@@ -63,6 +64,7 @@ func (input contextEnvironment) ToEnvironmentList() []string {
 
 		"ARTIFACT_BUCKET":              input.ArtifactBucketName,
 		"READ_BUCKET_ARNS":             input.ReadBucketArns,
+		"KMS_DECRYPT_POLICY":           input.KmsDecryptPolicy,
 		"READ_WRITE_BUCKET_ARNS":       input.ReadWriteBucketArns,
 		"BATCH_COMPUTE_INSTANCE_TYPES": input.InstanceTypes,
 		"MAX_V_CPUS":                   strconv.Itoa(input.MaxVCpus),

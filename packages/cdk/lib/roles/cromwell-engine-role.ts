@@ -5,6 +5,8 @@ import { Arn, Aws, Stack } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { Role, ServicePrincipal, PolicyDocument, PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { KMS_DEFAULT_KEY_POLICIES } from "aws-cdk-lib/cx-api";
+import { ContextAppParameters } from "../env";
+
 
 interface CromwellEngineRoleProps {
   readOnlyBucketArns: string[];
@@ -25,6 +27,7 @@ export class CromwellEngineRole extends Role {
       },
       scope as Stack
     );
+    const contextParameters = new ContextAppParameters(app.Node);    
     super(scope, id, {
       assumedBy: new ServicePrincipal("ecs-tasks.amazonaws.com"),
       inlinePolicies: {
@@ -48,7 +51,7 @@ export class CromwellEngineRole extends Role {
             new PolicyStatement({
               effect: Effect.ALLOW,
               actions:["kms:Decrypt"],
-              resources: [] //should add kms decrypt policy here if available
+              resources: [contextParameters.kmsDecryptPolicy] 
             })
           ]
         })
